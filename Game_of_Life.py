@@ -16,11 +16,16 @@ class Field:
                 # self.a[i].append(choice([0, 1]))
                 self.a[i].append(0)
 
-        self.a[1 + 10][1 + 10] = 1
-        self.a[1 + 10][3 + 10] = 1
-        self.a[2 + 10][3 + 10] = 1
-        self.a[2 + 10][2 + 10] = 1
-        self.a[3 + 10][2 + 10] = 1
+
+        self.a[24][24] = 1
+        self.a[24][25] = 1
+        self.a[24][26] = 1
+        self.a[25][24] = 1
+        self.a[25][25] = 1
+        self.a[25][26] = 1
+        self.a[26][24] = 1
+        self.a[26][25] = 1
+        self.a[26][26] = 1
         self.draw()
 
     def step(self):
@@ -30,17 +35,16 @@ class Field:
             for j in range(self.m):
                 b[i].append(0)
 
-        for i in range(1, self.n - 1):
-            for j in range(1, self.m - 1):
-                neib_sum = self.a[i - 1][j - 1] + self.a[i - 1][j] + self.a[i - 1][j + 1] + self.a[i][j - 1] + \
-                           self.a[i - 1][j + 1] + self.a[i + 1][j - 1] + self.a[i + 1][j] + self.a[i + 1][j + 1]
-                if neib_sum < 2 or neib_sum > 3:
-                    b[i][j] = 0
-                elif neib_sum == 3:
-                    b[i][j] = 1
+        for x in range(1, self.n - 1):
+            for y in range(1, self.m - 1):
+                n_sum = self.a[x - 1][y - 1] + self.a[x - 1][y] + self.a[x - 1][y + 1] + self.a[x][y - 1] + \
+                        self.a[x][y + 1] + self.a[x + 1][y - 1] + self.a[x + 1][y] + self.a[x + 1][y + 1]
+                if n_sum < 2 or n_sum > 3:
+                    b[x][y] = 0
+                elif n_sum == 3:
+                    b[x][y] = 1
                 else:
-                    b[i][j] = self.a[i][j]
-
+                    b[x][y] = self.a[x][y]
         self.a = b
 
     def print_field(self):
@@ -103,7 +107,7 @@ c = Canvas(root, width=800, height=800)
 c.pack()
 
 root.title('Game of Life')
-f = Field(c, 40, 40, 800, 800)
+f = Field(c, 50, 50, 800, 800)
 f.print_field()
 
 root.mainloop()
